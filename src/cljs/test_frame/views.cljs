@@ -78,7 +78,7 @@
   (fn []
     [re-com/v-box
      :height "100%"
-     :children [[title] [modal-dialog] [show-alerts] [clock] ]]))
+     :children [[title] [show-alerts] [clock] [modal-dialog]]]))
 
 (defonce time-updater (js/setInterval
                        #(re-frame/dispatch [:timer (js/Date.)]) 1000))
