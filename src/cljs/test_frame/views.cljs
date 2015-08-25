@@ -31,7 +31,7 @@
 ;#(re-frame/dispatch [:alert-detail ])
 (defn show-alert [alert]
                                         ;(re-frame/dispatch [:alert-detail alert])
-  [:li.list-group-item.alert-item {:on-click #(reagent-modals/modal! [:div "some message to the user!" [:button.btn.btn-default "test"]])}
+  [:li.list-group-item.alert-item.pointer {:on-click #(reagent-modals/modal! [:div "some message to the user!" [:button.btn.btn-default "test"]])}
    [:p.list-group-item-text (:desc alert)]
    [:i.fa.fa-chevron-right.pull-right]
    [:p.list-group-item-text (:amount alert)]
