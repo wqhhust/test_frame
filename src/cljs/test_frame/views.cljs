@@ -3,6 +3,9 @@
               [reagent-modals.modals :as reagent-modals]
               ))
 
+(defn value-of [element]
+  (-> element .-target .-value))
+
 (def feedback-opitons
   [{:id 1 :label "valid alert"}
    {:id 2 :label "invalid alert"}
@@ -31,7 +34,7 @@
 ;#(re-frame/dispatch [:alert-detail ])
 (defn show-alert [alert]
                                         ;(re-frame/dispatch [:alert-detail alert])
-  [:li.list-group-item.alert-item.pointer {:on-click #(reagent-modals/modal! [:div "some message to the user!" [:button.btn.btn-default "test"]])}
+  [:li.list-group-item.alert-item.pointer {:on-click #(reagent-modals/modal! [show-detail alert])}
    [:p.list-group-item-text (:desc alert)]
    [:i.fa.fa-chevron-right.pull-right]
    [:p.list-group-item-text (:amount alert)]
@@ -39,10 +42,16 @@
    ])
 
 (defn show-detail [alert]
-  [:li.list-group-item.alert-item
+  [:li#alert-detail.list-group-item.alert-item
    [:p.list-group-item-text (:desc alert)]
    [:p.list-group-item-text (:amount alert)]
    [:p.list-group-item-text (:alert-id alert)]
+   [:div
+    [:select.select-picker { :on-click #(js/console.log (value-of %))}
+     [:option "valid"]
+     [:option "invalid"]
+     [:option "unkown"]]]
+   [:div.btn.btn-primary {:data-dismiss "modal":on-click #(doto (js/jQuery "#alert-detail") (.modal "hide"))} "save" ]
    ]
   )
 
