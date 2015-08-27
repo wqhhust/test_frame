@@ -47,10 +47,10 @@
    [:p.list-group-item-text (:amount alert)]
    [:p.list-group-item-text (:alert-id alert)]
    [:div
-    [:select.select-picker { :on-click #(js/console.log (value-of %))}
-     [:option "valid"]
-     [:option "invalid"]
-     [:option "unkown"]]]
+    [:select.select-picker {:value "3" :on-click #(js/console.log (value-of %)) }
+     [:option {:value "1"} "valid" ]
+     [:option {:value "2"} "invalid"]
+     [:option {:value "3"} "unkown aa" ]]]
    [:div.btn.btn-primary {:data-dismiss "modal":on-click #(doto (js/jQuery "#alert-detail") (.modal "hide"))} "save" ]
    ]
   )
