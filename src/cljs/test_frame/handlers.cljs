@@ -21,3 +21,13 @@
    ;; new value
    [db [_ value]]
    (assoc db :timer value)))    ;; return the new version of db
+
+
+
+(re-frame/register-handler
+ :feedback
+ (fn  [db [_ feedback-desc]]
+   (js/console.log "inside handle")
+   (js/console.log (pr-str feedback-desc))
+   (js/console.log (pr-str db))
+   (assoc db :current-alert feedback-desc)))

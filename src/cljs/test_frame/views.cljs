@@ -1,5 +1,6 @@
 (ns test-frame.views
     (:require [re-frame.core :as re-frame]
+              [reagent.core  :as reagent :refer [atom]]
               [reagent-modals.modals :as reagent-modals]
               ))
 
@@ -42,21 +43,25 @@
    ])
 
 (defn show-detail [alert]
-  [:li#alert-detail.list-group-item.alert-item
-   [:p.list-group-item-text (:desc alert)]
-   [:p.list-group-item-text (:amount alert)]
-   [:p.list-group-item-text (:alert-id alert)]
-   [:div
-    [:select.select-picker
-     {:default-value (:feedback-desc alert) :on-click #(js/console.log (value-of %) (:feedback-desc alert))}
-     [:option ""]
-     [:option "valid"]
-     [:option "invalid"]
-     [:option "unkown"]]
-    ]
-                                        ; hidden the modal (doto (js/jQuery "#alert-detail") (.modal "hide"))
-   [:div.btn.btn-primary {:data-dismiss "modal":on-click #(doto (js/jQuery "#alert-detail") (.modal "hide"))} "close" ]
-   ]
+  (let [feedback (atom (:feedback-desc alert))]
+    [:li#alert-detail.list-group-item.alert-item
+     [:p.list-group-item-text (:desc alert)]
+     [:p.list-group-item-text (:amount alert)]
+     [:p.list-group-item-text (:alert-id alert)]
+     [:div
+      [:select.select-picker
+       {:default-value (:feedback-desc alert) :on-click #(reset! feedback (value-of %))}
+       [:option ""]
+       [:option "valid"]
+       [:option "invalid"]
+       [:option "unkown"]]]
+     [:div.btn.btn-default {:data-dismiss "modal"} "cancel"]
+     [:div.btn.btn-primary {:data-dismiss "modal"
+                            ;;:on-click #(doto (js/jQuery "#alert-detail") (.modal "hide"))
+                            :on-click #(re-frame/dispatch [:feedback @feedback])
+                            } "save" ]
+     ]
+    )
   )
 
 (defn show-alerts []
