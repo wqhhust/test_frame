@@ -31,3 +31,10 @@
    (js/console.log (pr-str feedback-desc))
    (js/console.log (pr-str db))
    (assoc db :current-alert feedback-desc)))
+
+(re-frame/register-handler
+ :navigate
+ (fn  [db [_ value]]
+   (js/console.log "inside handle")
+   (js/console.log (pr-str db))
+   (assoc db :current-page (+ value (:current-page db)))))

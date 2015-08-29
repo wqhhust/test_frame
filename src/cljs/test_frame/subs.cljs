@@ -16,7 +16,10 @@
 (re-frame/register-sub
  :alerts
  (fn [db _]
-   (reaction (:alerts @db))))
+   (reaction {:current-page (:current-page @db)
+              :alerts (:alerts @db)
+              :page-size (:page-size @db)
+              })))
 
 (re-frame/register-sub
  :timer
