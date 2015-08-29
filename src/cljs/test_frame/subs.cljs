@@ -17,7 +17,7 @@
  :alerts
  (fn [db _]
    (reaction {:current-page (:current-page @db)
-              :alerts (:alerts @db)
+              :alerts (sort-by :alert-id (mapv (fn[[k v]] v) (:alerts @db)))
               :page-size (:page-size @db)
               })))
 

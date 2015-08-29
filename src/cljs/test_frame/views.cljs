@@ -21,14 +21,16 @@
    ])
 
 (defn show-detail [alert]
-  (let [feedback (atom (:feedback-desc alert))]
+  (let [new-feedback (atom (:feedback-desc alert))
+        {:keys [feedback-desc desc amount alert-id]} alert
+        ]
     [:li#alert-detail.list-group-item.alert-item
-     [:p.list-group-item-text (:desc alert)]
-     [:p.list-group-item-text (:amount alert)]
-     [:p.list-group-item-text (:alert-id alert)]
+     [:p.list-group-item-text desc]
+     [:p.list-group-item-text amount]
+     [:p.list-group-item-text alert-id]
      [:div
       [:select.select-picker
-       {:default-value (:feedback-desc alert) :on-click #(reset! feedback (value-of %))}
+       {:default-value feedback-desc :on-click #(reset! new-feedback (value-of %))}
        [:option ""]
        [:option "valid"]
        [:option "invalid"]
@@ -37,7 +39,7 @@
       [:div.btn.btn-default {:data-dismiss "modal"} "cancel"]
       [:div.btn.btn-default {:data-dismiss "modal"
                              ;;:on-click #(doto (js/jQuery "#alert-detail") (.modal "hide"))
-                             :on-click #(re-frame/dispatch [:feedback @feedback])
+                             :on-click #(re-frame/dispatch [:feedback {:feedback-desc @new-feedback :alert-id alert-id} ])
                              } "save" ]
       ]]))
 
@@ -52,6 +54,7 @@
          [:div
           [:nav
            [:ul.pager
+            (js/console.log "current page *****" (pr-str @alerts-info))
             (js/console.log "current page *****" current-page)
             (when (> current-page 0)
               [:li [:a {:href "#" :on-click #(re-frame/dispatch [:navigate -1])} "Previous"]])
