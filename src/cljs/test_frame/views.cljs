@@ -42,24 +42,21 @@
       ]]))
 
 (defn show-alerts []
-  (let [alerts (re-frame/subscribe [:alerts])]
+  (let [alerts-info (re-frame/subscribe [:alerts])]
     (fn []
-      (js/console.log (pr-str @alerts))
-      [:div
-       [:div#alerts.list-group (map show-alert (:alerts @alerts))]
-       [:div
-        [:nav
-         [:ul.pager
-          (when (< (* (inc (:current-page @alerts)) (:page-size @alerts)) (count (:alerts @alerts)))
-            [:li [:a {:href "#" :on-click #(re-frame/dispatch [:navigate 1])} "Previous"]]
-            )
-          (when (> 1 (:current-page @alerts))
-            [:li [:a {:href "#" :on-click #(re-frame/dispatch [:navigate -1])} "Next"]]
-              )
-          ]
-         ]
-        ]]
-      )))
+      (js/console.log (pr-str @alerts-info))
+      (let [{:keys [current-page page-size alerts]} @alerts-info
+            alerts-to-show (->> alerts (drop (* page-size current-page)) (take page-size))]
+        [:div
+         [:div#alerts.list-group (map show-alert alerts-to-show)]
+         [:div
+          [:nav
+           [:ul.pager
+            (js/console.log "current page *****" current-page)
+            (when (> current-page 0)
+              [:li [:a {:href "#" :on-click #(re-frame/dispatch [:navigate -1])} "Previous"]])
+            (when (< (* (inc current-page) page-size) (count alerts))
+              [:li [:a {:href "#" :on-click #(re-frame/dispatch [:navigate 1])} "Next"]])]]]]))))
 
 (defn main-panel []
   (fn []
