@@ -38,7 +38,6 @@
      [:div.btn-group
       [:div.btn.btn-default {:data-dismiss "modal"} "cancel"]
       [:div.btn.btn-default {:data-dismiss "modal"
-                             ;;:on-click #(doto (js/jQuery "#alert-detail") (.modal "hide"))
                              :on-click #(re-frame/dispatch [:feedback {:feedback-desc @new-feedback :alert-id alert-id} ])
                              } "save" ]
       ]]))
@@ -67,7 +66,3 @@
      [:div [show-alerts]]
      [reagent-modals/modal-window]
      ]))
-
-(defonce time-updater (js/setInterval
-                       #(re-frame/dispatch [:timer (js/Date.)]) 1000))
-
