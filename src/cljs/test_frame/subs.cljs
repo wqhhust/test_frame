@@ -20,9 +20,3 @@
               :alerts (sort-by :alert-id (mapv (fn[[k v]] v) (:alerts @db)))
               :page-size (:page-size @db)
               })))
-
-(re-frame/register-sub
- :timer
- (fn
-   [db _]                       ;; db is the app-db atom
-   db))    ;; wrap the computation in a reaction

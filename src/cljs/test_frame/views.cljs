@@ -7,11 +7,6 @@
 (defn value-of [element]
   (-> element .-target .-value))
 
-(def feedback-opitons
-  [{:id 1 :label "valid alert"}
-   {:id 2 :label "invalid alert"}
-   {:id 3 :label "unknown alert"}])
-
 (defn show-alert [alert]
   [:li.list-group-item.alert-item.pointer {:on-click #(reagent-modals/modal! [show-detail alert])}
    [:p.list-group-item-text (:desc alert)]
