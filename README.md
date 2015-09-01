@@ -2,7 +2,9 @@
 
 run
 
-lein clean
+lein clean;
+
+
 
 lein figwheel dev
 
