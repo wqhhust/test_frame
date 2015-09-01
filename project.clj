@@ -16,7 +16,7 @@
   :cljsbuild {:builds [{:id "dev"
                         :source-paths ["src/cljs"]
 
-                        :figwheel {:on-jsload "test_frame.core/mount-root"
+                        :figwheel {:on-jsload "test-frame.core/mount-root"
                                    ;;:websocket-host ~(.getHostAddress (java.net.InetAddress/getLocalHost))
 ;;                                   :websocket-host "10.0.0.5"
                                    }
@@ -29,7 +29,7 @@
 
                        {:id "min"
                         :source-paths ["src/cljs"]
-                        :compiler {:main test_frame.core
+                        :compiler {:main test-frame.core
                                    :output-to "resources/public/js/compiled/app.js"
                                    :optimizations :advanced
                                    :pretty-print false}}]})

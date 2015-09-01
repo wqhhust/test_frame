@@ -9,7 +9,9 @@
 (defn show-detail [alert]
   (let [new-feedback (atom (:feedback-desc alert))
         {:keys [feedback-desc desc amount alert-id]} alert]
+    (js/console.log "render in show-detail outside of fun")
     (fn[]
+      (js/console.log "render in show-detail inside of fun")
       [:li#alert-detail.list-group-item.alert-item
        [:p.list-group-item-text desc]
        [:p.list-group-item-text amount]
@@ -38,7 +40,9 @@
 
 (defn show-alerts []
   (let [alerts-info (re-frame/subscribe [:alerts])]
+    (js/console.log "render in show-alerts outside of fun")
     (fn []
+      (js/console.log "render in show-alerts inside of fun")
       (js/console.log (pr-str @alerts-info))
       (let [{:keys [current-page page-size alerts]} @alerts-info
             alerts-to-show (->> alerts (drop (* page-size current-page)) (take page-size))]
