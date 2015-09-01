@@ -9,7 +9,8 @@
                                  {:alert-id x
                                   :desc (str "test" x)
                                   :amount x
-                                  }})(range 1 40)))
+                                  :feedback-desc (if (= 0 (mod x 2)) "valid" "invalid")
+                                  }})(range 1 4)))
    })
 
 

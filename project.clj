@@ -2,6 +2,7 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/clojurescript "0.0-3211"]
                  [reagent "0.5.0"]
+                 [cljs-ajax "0.3.14"]
                  [org.clojars.frozenlock/reagent-modals "0.2.3"]
                  [re-frame "0.4.1"]]
 
@@ -15,7 +16,10 @@
   :cljsbuild {:builds [{:id "dev"
                         :source-paths ["src/cljs"]
 
-                        :figwheel {:on-jsload "test_frame.core/mount-root"}
+                        :figwheel {:on-jsload "test_frame.core/mount-root"
+                                   ;;:websocket-host ~(.getHostAddress (java.net.InetAddress/getLocalHost))
+;;                                   :websocket-host "10.0.0.5"
+                                   }
 
                         :compiler {:main test_frame.core
                                    :output-to "resources/public/js/compiled/app.js"
