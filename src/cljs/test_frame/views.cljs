@@ -9,7 +9,7 @@
 (defn show-detail [alert]
   (let [new-feedback (atom (:feedback-desc alert))
         {:keys [feedback-desc desc amount alert-id]} alert]
-    (js/console.log "render in show-detail outside of fun")
+    (js/console.log "render in show-detail outside of fun ")
     (fn[]
       (js/console.log "render in show-detail inside of fun")
       [:li#alert-detail.list-group-item.alert-item
