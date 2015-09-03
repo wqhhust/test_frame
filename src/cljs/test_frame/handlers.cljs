@@ -11,17 +11,13 @@
 (re-frame/register-handler
  :feedback
  (fn  [db [_ feedback]]
-   (js/console.log "inside handle")
-   (ajax.core/POST (str "http://localhost:6003/alert/" (:alert-id feedback))
-                   {:params {:a 1 :b 2}
-                    :handle #(js/console.log (pr-str %))
-                    :error-handler #(js/console.log (pr-str %))})
+   (js/console.log "inside handle feedback")
    (assoc-in db [:alerts (keyword (str (:alert-id feedback))) :feedback-desc] (:feedback-desc feedback))))
 
 (re-frame/register-handler
  :navigate
  (fn  [db [_ value]]
-   (js/console.log "inside handle")
+   (js/console.log "inside handle navigate")
    (js/console.log (pr-str (:current-alert db)))
    (assoc db :current-page (+ value (:current-page db)))))
 
