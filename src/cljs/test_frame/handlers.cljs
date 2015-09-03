@@ -8,11 +8,26 @@
  (fn  [_ _]
    db/default-db))
 
+(defn handler [response]
+  (.log js/console (str response)))
+
+(def host "http://10.0.0.10:6003/")
+
+(defn error-handler [{:keys [status status-text]}]
+  (.log js/console (str "something bad happened: " status " " status-text)))
+
 (re-frame/register-handler
  :feedback
  (fn  [db [_ feedback]]
-   (js/console.log "inside handle feedback")
-   (assoc-in db [:alerts (keyword (str (:alert-id feedback))) :feedback-desc] (:feedback-desc feedback))))
+   (let [path [:alerts (keyword (str (:alert-id feedback))) :feedback-desc]
+         feedback-desc (:feedback-desc feedback)]
+     (js/console.log "inside handle feedback")
+     (ajax.core/POST (str host "alert/" (:alert-id feedback))
+                     {:params {:a 1 :b 2 :c path :d feedback-desc}
+                      :format :edn
+                      :handler handler
+                      :error-handler handler})
+     (assoc-in db path feedback-desc))))
 
 (re-frame/register-handler
  :navigate
@@ -24,7 +39,7 @@
 (re-frame/register-handler
  :load-ajax-data
  (fn  [db [_ value]]
-   (ajax.core/GET "http://localhost:6003/alerts"
+   (ajax.core/GET (str host "alerts")
                   {:handler #(re-frame/dispatch [:process-response %1])
                    :error-handler #(re-frame/dispatch [:bad-response %1])})
    (assoc db :loading? true)

@@ -16,9 +16,10 @@
        [:p.list-group-item-text desc]
        [:p.list-group-item-text amount]
        [:p.list-group-item-text alert-id]
+       [:p.list-group-item-text @new-feedback]
        [:div
         [:select.select-picker
-         {:default-value feedback-desc :on-click #(reset! new-feedback (value-of %))}
+         {:default-value feedback-desc :on-change #(reset! new-feedback (value-of %))}
          [:option ""]
          [:option "valid"]
          [:option "invalid"]
@@ -26,12 +27,14 @@
        [:div.btn-group
         [:div.btn.btn-default {:data-dismiss "modal"} "cancel"]
         [:div.btn.btn-default {:data-dismiss "modal"
-                               :on-click #(re-frame/dispatch [:feedback {:feedback-desc @new-feedback :alert-id alert-id} ])
+                               :on-click (fn[x]
+                                           (re-frame/dispatch [:feedback {:feedback-desc @new-feedback :alert-id alert-id} ])
+                                           )
                                } "save" ]
         ]])))
 
 (defn show-alert [alert]
-  [:li.list-group-item.alert-item.pointer {:on-click #(reagent-modals/modal! [show-detail alert])}
+  ^{:key (:alert-id alert)} [:li.list-group-item.alert-item.pointer {:on-click #(reagent-modals/modal! [show-detail alert])}
    [:p.list-group-item-text (:desc alert)]
    [:i.fa.fa-chevron-right.pull-right]
    [:p.list-group-item-text (:amount alert)]

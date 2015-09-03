@@ -10,7 +10,7 @@
                                   :desc (str "test" x)
                                   :amount x
                                   :feedback-desc (if (= 0 (mod x 2)) "valid" "invalid")
-                                  }})(range 1 4)))
+                                  }})(range 1 70)))
    })
 
 
