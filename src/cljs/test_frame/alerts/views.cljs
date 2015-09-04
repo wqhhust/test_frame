@@ -1,4 +1,4 @@
-(ns test-frame.views
+(ns test-frame.alerts.views
     (:require [re-frame.core :as re-frame]
               [reagent.core  :as reagent :refer [atom]]
               [reagent-modals.modals :as reagent-modals]))

@@ -1,9 +1,9 @@
-(ns test-frame.core
+(ns test-frame.alerts.core
     (:require [reagent.core :as reagent]
               [re-frame.core :as re-frame]
-              [test-frame.handlers]
-              [test-frame.subs]
-              [test-frame.views :as views]))
+              [test-frame.alerts.handlers]
+              [test-frame.alerts.subs]
+              [test-frame.alerts.views :as views]))
 
 (defn mount-root []
   (reagent/render [views/main-panel]
@@ -12,3 +12,4 @@
 (defn ^:export init []
   (re-frame/dispatch-sync [:initialize-db])
   (mount-root))
+alerts

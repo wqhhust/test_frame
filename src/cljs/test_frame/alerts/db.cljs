@@ -1,4 +1,4 @@
-(ns test-frame.db)
+(ns test-frame.alerts.db)
 
 ;; to check the db status use:  @re-frame.db/app-db
 (def default-db

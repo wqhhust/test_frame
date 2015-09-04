@@ -1,7 +1,7 @@
-(ns test-frame.handlers
+(ns test-frame.alerts.handlers
     (:require [re-frame.core :as re-frame]
               [ajax.core :refer [GET POST]]
-              [test-frame.db :as db]))
+              [test-frame.alerts.db :as db]))
 
 (re-frame/register-handler
  :initialize-db
@@ -23,7 +23,7 @@
          feedback-desc (:feedback-desc feedback)]
      (js/console.log "inside handle feedback")
      (ajax.core/POST (str host "alert/" (:alert-id feedback))
-                     {:params {:a 1 :b 2 :c path :d feedback-desc}
+                     {:params feedback
                       :format :edn
                       :handler handler
                       :error-handler handler})

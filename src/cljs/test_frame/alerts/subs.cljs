@@ -1,4 +1,4 @@
-(ns test-frame.subs
+(ns test-frame.alerts.subs
     (:require-macros [reagent.ratom :refer [reaction]])
     (:require [re-frame.core :as re-frame]))
 
