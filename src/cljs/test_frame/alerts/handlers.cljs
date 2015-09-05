@@ -2,6 +2,7 @@
     (:require [re-frame.core :as re-frame]
               [ajax.core :refer [GET POST]]
               [patisserie.core :as cookie]
+              [test-frame.utils :as utils]
               [test-frame.alerts.db :as db]))
 
 (re-frame/register-handler
@@ -23,9 +24,8 @@
    (js/console.log "outside handle feedback")
    (let [path [:alerts (keyword (str (:alert-id feedback))) :feedback-desc]
          feedback-desc (:feedback-desc feedback)
-         login-token (cljs.reader/read-string (cookie/cookie "token"))
-         token-pair (get login-token "token-pair" {:msg "not a valid token-pair"})
-         auth-token (get token-pair "auth-token" {:msg "not a valid auth-token"})]
+         auth-token (utils/get-auth-token)]
+     (js/console.log "token is " auth-token)
      (ajax.core/POST (str host "alert/" (:alert-id feedback))
                      {:params feedback
                       :headers {"Authorization" (str "Acme-Token " auth-token)}
