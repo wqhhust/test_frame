@@ -6,5 +6,5 @@
 (re-frame/register-sub
  :login
  (fn [db _]
-   (reaction (:active-panel db))
+   (reaction (:active-panel @db))
    ))
