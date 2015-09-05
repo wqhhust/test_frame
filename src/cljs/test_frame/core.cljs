@@ -1,22 +1,24 @@
 (ns test-frame.core
+    (:require-macros [reagent.ratom :refer [reaction]])
     (:require [reagent.core :as reagent]
               [re-frame.core :as re-frame]
               [patisserie.core :as cookie]
               [test-frame.alerts.handlers]
               [test-frame.login.handlers]
               [test-frame.alerts.subs]
+              [test-frame.login.subs]
               [test-frame.login.views :as login-views]
               [test-frame.alerts.views :as alerts-views]))
 
 (defn high-level-view []
-  (let [active :login]
+  (let [panel (re-frame/subscribe [:login])]
     (fn []
       [:div
-       ;(condp = active :login  [login-views/main-panel] :alerts [alerts-views/main-panel])
-       (if (cookie/cookie "token")
-         [alerts-views/main-panel]
-         [login-views/main-panel]
-         )
+       (condp = panel
+         :login  [login-views/main-panel]
+         :alerts [alerts-views/main-panel]
+         [login-views/main-panel])
+       ;(if (cookie/cookie "token") [alerts-views/main-panel] [login-views/main-panel])
        ])))
 
 (defn mount-root []
