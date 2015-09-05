@@ -21,7 +21,7 @@
 ;;                                   :websocket-host "10.0.0.5"
                                    }
 
-                        :compiler {:main test-frame.alerts.core
+                        :compiler {:main test-frame.core
                                    :output-to "resources/public/js/compiled/app.js"
                                    :output-dir "resources/public/js/compiled/out"
                                    :asset-path "js/compiled/out"
@@ -29,7 +29,7 @@
 
                        {:id "min"
                         :source-paths ["src/cljs"]
-                        :compiler {:main test-frame.alerts.core
+                        :compiler {:main test-frame.core
                                    :output-to "resources/public/js/compiled/app.js"
                                    :optimizations :advanced
                                    :pretty-print false}}]})

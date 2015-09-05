@@ -1,0 +1,32 @@
+(ns test-frame.login.views
+    (:require [re-frame.core :as re-frame]
+              [reagent.core  :as reagent :refer [atom]]
+              [reagent-modals.modals :as reagent-modals]))
+
+(defn value-of [element]
+  (-> element .-target .-value))
+
+(def user-pwd (atom {}))
+
+(defn input [attrs field]
+  [:div
+   [:label {:for (:field attrs) :class "control-label"} (:label attrs)]
+   [:input {:type (or (:type attrs) "text")
+            :class "form-control"
+            :id (:field attrs)
+            :name (:field attrs)
+            :on-change (fn[x] (swap! user-pwd assoc field (value-of x)))
+            :placeholder (:label attrs)}]])
+
+(defn login []
+  [:div {:class "row"}
+   [:div {:class "col-sm-9 col-lg-10"} [:p {} "Login to acme store to get all the benefits..."]]
+   [:div {:class "col-sm-3 col-lg-2"}
+     [:div {:class "form-group"} (input {:field "username" :label "Username"} :user)]
+     [:div {:class "form-group"} (input {:field "password" :label "Password" :type "password"} :password)]
+    [:div {:class "form-group"} [:button {:class "btn btn-default" :on-click #(js/console.log "clock login" (pr-str @user-pwd))} "Login"]]]]
+  )
+
+(defn main-panel []
+  (login)
+  )

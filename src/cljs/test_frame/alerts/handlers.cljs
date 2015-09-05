@@ -26,7 +26,7 @@
                      {:params feedback
                       :format :edn
                       :handler handler
-                      :error-handler handler})
+                      :error-handler error-handler})
      (assoc-in db path feedback-desc))))
 
 (re-frame/register-handler
