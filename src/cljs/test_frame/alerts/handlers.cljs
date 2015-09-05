@@ -1,6 +1,7 @@
 (ns test-frame.alerts.handlers
     (:require [re-frame.core :as re-frame]
               [ajax.core :refer [GET POST]]
+              [patisserie.core :as cookie]
               [test-frame.alerts.db :as db]))
 
 (re-frame/register-handler
@@ -11,7 +12,7 @@
 (defn handler [response]
   (.log js/console (str response)))
 
-(def host "http://10.0.0.10:6003/")
+(def host "http://10.0.0.3:6003/")
 
 (defn error-handler [{:keys [status status-text]}]
   (.log js/console (str "something bad happened: " status " " status-text)))
@@ -19,11 +20,15 @@
 (re-frame/register-handler
  :feedback
  (fn  [db [_ feedback]]
+   (js/console.log "outside handle feedback")
    (let [path [:alerts (keyword (str (:alert-id feedback))) :feedback-desc]
-         feedback-desc (:feedback-desc feedback)]
-     (js/console.log "inside handle feedback")
+         feedback-desc (:feedback-desc feedback)
+         login-token (cljs.reader/read-string (cookie/cookie "token"))
+         token-pair (get login-token "token-pair" {:msg "not a valid token-pair"})
+         auth-token (get token-pair "auth-token" {:msg "not a valid auth-token"})]
      (ajax.core/POST (str host "alert/" (:alert-id feedback))
                      {:params feedback
+                      :headers {"Authorization" (str "Acme-Token " auth-token)}
                       :format :edn
                       :handler handler
                       :error-handler error-handler})
