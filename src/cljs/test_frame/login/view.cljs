@@ -22,9 +22,9 @@
   [:div {:class "row"}
    [:div {:class "col-sm-9 col-lg-10"} [:p {} "Login to acme store to get all the benefits..."]]
    [:div {:class "col-sm-3 col-lg-2"}
-     [:div {:class "form-group"} (input {:field "username" :label "Username"} :user)]
+     [:div {:class "form-group"} (input {:field "username" :label "Username"} :username)]
      [:div {:class "form-group"} (input {:field "password" :label "Password" :type "password"} :password)]
-    [:div {:class "form-group"} [:button {:class "btn btn-default" :on-click #(js/console.log "clock login" (pr-str @user-pwd))} "Login"]]]]
+    [:div {:class "form-group"} [:button {:class "btn btn-default" :on-click #(re-frame/dispatch [:login @user-pwd])} "Login"]]]]
   )
 
 (defn main-panel []

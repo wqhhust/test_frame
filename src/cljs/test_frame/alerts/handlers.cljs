@@ -4,7 +4,7 @@
               [test-frame.alerts.db :as db]))
 
 (re-frame/register-handler
- :initialize-db
+ :initialize-login-db
  (fn  [_ _]
    db/default-db))
 
@@ -58,6 +58,4 @@
  :bad-response
  (fn [db [_ response]]
    (js/console.log "bad response, can't get the correct data" (pr-str response))
-   db
-   )
- )
+   db))
