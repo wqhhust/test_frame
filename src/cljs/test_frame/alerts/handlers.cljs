@@ -4,7 +4,7 @@
               [test-frame.alerts.db :as db]))
 
 (re-frame/register-handler
- :initialize-login-db
+ :initialize-db
  (fn  [_ _]
    db/default-db))
 
@@ -40,13 +40,13 @@
  :load-ajax-data
  (fn  [db [_ value]]
    (ajax.core/GET (str host "alerts")
-                  {:handler #(re-frame/dispatch [:process-response %1])
-                   :error-handler #(re-frame/dispatch [:bad-response %1])})
+                  {:handler #(re-frame/dispatch [:process-alerts-response %1])
+                   :error-handler #(re-frame/dispatch [:bad-alerts-response %1])})
    (assoc db :loading? true)
    ))
 
 (re-frame/register-handler
- :process-response
+ :process-alerts-response
  (fn [db [_ response]]
    (js/console.log "good response, the response is:" (pr-str response))
    (-> db
@@ -55,7 +55,7 @@
        )))
 
 (re-frame/register-handler
- :bad-response
+ :bad-alerts-response
  (fn [db [_ response]]
    (js/console.log "bad response, can't get the correct data" (pr-str response))
    db))

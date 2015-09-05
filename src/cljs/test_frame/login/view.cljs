@@ -24,9 +24,14 @@
    [:div {:class "col-sm-3 col-lg-2"}
      [:div {:class "form-group"} (input {:field "username" :label "Username"} :username)]
      [:div {:class "form-group"} (input {:field "password" :label "Password" :type "password"} :password)]
-    [:div {:class "form-group"} [:button {:class "btn btn-default" :on-click #(re-frame/dispatch [:login @user-pwd])} "Login"]]]]
+    [:div {:class "form-group"} [:button {:class "btn btn-default" :on-click (fn[x]
+                                                                               (js/console.log "inside submit")
+                                                                               (js/console.log (pr-str @re-frame.db/app-db))
+                                                                               (re-frame/dispatch [:login @user-pwd])
+                                                                               )} "Login"]]]]
   )
 
 (defn main-panel []
+  (js/console.log (pr-str @re-frame.db/app-db))
   (login)
   )

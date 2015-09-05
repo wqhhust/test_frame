@@ -4,6 +4,7 @@
                  [reagent "0.5.0"]
                  [cljs-ajax "0.3.14"]
                  [patisserie "0.1.1"]
+                 [binaryage/devtools "0.3.0"]
                  [org.clojars.frozenlock/reagent-modals "0.2.3"]
                  [re-frame "0.4.1"]]
 
