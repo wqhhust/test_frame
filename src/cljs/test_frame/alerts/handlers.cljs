@@ -1,6 +1,6 @@
 (ns test-frame.alerts.handlers
     (:require [re-frame.core :as re-frame]
-              [ajax.core :refer [GET POST]]
+              [ajax.core :refer [GET POST PUT]]
               [patisserie.core :as cookie]
               [test-frame.utils :as utils]
               [test-frame.alerts.db :as db]))
@@ -26,7 +26,7 @@
          feedback-desc (:feedback-desc feedback)
          auth-token (utils/get-auth-token)]
      (js/console.log "token is " auth-token)
-     (ajax.core/POST (str host "alert/" (:alert-id feedback))
+     (ajax.core/PUT (str host "alert/" (:alert-id feedback))
                      {:params feedback
                       :headers {"Authorization" (str "Acme-Token " auth-token)}
                       :format :edn
@@ -46,6 +46,7 @@
  (fn  [db [_ value]]
    (ajax.core/GET (str host "alerts")
                   {:handler #(re-frame/dispatch [:process-alerts-response %1])
+                   :headers {"Authorization" (str "Acme-Token " (utils/get-auth-token))}
                    :error-handler #(re-frame/dispatch [:bad-alerts-response %1])})
    (assoc db :loading? true)
    ))
