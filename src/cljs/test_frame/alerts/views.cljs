@@ -17,6 +17,7 @@
        [:p.list-group-item-text amount]
        [:p.list-group-item-text alert-id]
        [:p.list-group-item-text @new-feedback]
+       [:div#chart-area]
        [:div
         [:select.select-picker
          {:default-value feedback-desc :on-change #(reset! new-feedback (value-of %))}
@@ -33,8 +34,25 @@
                                } "save" ]
         ]])))
 
+(defn plot-chart []
+  (.Donut js/Morris (clj->js {:element "chart-area"
+                              :data [{:label "Download Sales" :value 12}
+                                     {:label "In-Store Sales" :value 30}
+                                     {:label "Mail-Order Sales" :value 20}]})))
+
+(defn show-detail-with-chart [alert]
+  (reagent/create-class
+   {
+   ;; :component-did-mount #(js/console.log "inside component-did-amount")
+    :component-did-mount plot-chart
+    :display-name "detail-with-chart"
+    :reagent-render (fn [alert] (show-detail alert))
+    }
+   )
+  )
+
 (defn show-alert [alert]
-  ^{:key (:alert-id alert)} [:li.list-group-item.alert-item.pointer {:on-click #(reagent-modals/modal! [show-detail alert])}
+  ^{:key (:alert-id alert)} [:li.list-group-item.alert-item.pointer {:on-click #(reagent-modals/modal! [show-detail-with-chart alert])}
    [:p.list-group-item-text (:desc alert)]
    [:i.fa.fa-chevron-right.pull-right]
    [:p.list-group-item-text (:amount alert)]
