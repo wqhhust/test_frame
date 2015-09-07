@@ -14,10 +14,12 @@
   (let [panel (re-frame/subscribe [:login])]
     (fn []
       [:div
-       [:div "panel is " (pr-str @panel)]
+       [:div "The panel is " (pr-str @panel)]
        [:div
 ;;        (condp = @panel :login  [login-views/main-panel] :alerts [alerts-views/main-panel] [login-views/main-panel])
-        (if (or (cookie/cookie "token") (= @panel :alerts)) [alerts-views/main-panel] [login-views/main-panel])]])))
+       ;; (if (or (cookie/cookie "token") (= @panel :alerts)) [alerts-views/main-panel] [login-views/main-panel])
+        [alerts-views/main-panel]
+        ]])))
 
 (defn mount-root []
   (reagent/render [high-level-view]
